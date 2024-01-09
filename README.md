@@ -1,3 +1,4 @@
+<a href="https://codeclimate.com/github/YobiDoYobi/java-project-61/maintainability"><img src="https://api.codeclimate.com/v1/badges/16941746717e144e3cbd/maintainability" /></a>
 # Домашние задания
 
 Работа над домашними заданиями происходит на компьютере студента. 
