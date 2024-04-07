@@ -5,6 +5,6 @@
 @template.layout.page(
 content = @`
 <%--<a href="/users/build">New User</a>--%>
-    <p>Welcome!.</p>
+    <p>Welcome!</p>
 `
 )
