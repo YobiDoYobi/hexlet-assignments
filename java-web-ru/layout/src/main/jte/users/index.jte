@@ -19,7 +19,7 @@ content = @`
             @for(var user : page.getUsers())
                 <tr>
                     <th scope="row"><a href="/users/${user.getId()}">${user.getId()}</a></th>
-                    <td>${user.getLastName()} ${user.getFirstName()}</td>
+                    <td>${user.getFirstName()} ${user.getLastName()}</td>
                 </tr>
             @endfor
             </tbody>
