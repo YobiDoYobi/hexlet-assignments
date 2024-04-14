@@ -38,9 +38,9 @@ public final class App {
             ctx.render("users/build.jte");
         });
         app.post("/users", ctx -> {
-            var firstName = StringUtils.capitalize(ctx.formParam("firstName"));
-            var lastName = StringUtils.capitalize(ctx.formParam("lastName"));
-            var email = StringUtils.lowerCase(ctx.formParam("email"));
+            var firstName = StringUtils.trim(StringUtils.capitalize(ctx.formParam("firstName")));
+            var lastName = StringUtils.trim(StringUtils.capitalize(ctx.formParam("lastName")));
+            var email = StringUtils.trim(StringUtils.lowerCase(ctx.formParam("email")));
             var password = StringUtils.trim(ctx.formParam("password"));
             //var passwordConfirmation = ctx.formParam("passwordConfirmation");
 
