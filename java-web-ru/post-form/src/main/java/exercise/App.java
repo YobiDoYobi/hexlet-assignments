@@ -1,8 +1,11 @@
 package exercise;
 
 import io.javalin.Javalin;
+
 import java.util.List;
+
 import static io.javalin.rendering.template.TemplateUtil.model;
+
 import io.javalin.rendering.template.JavalinJte;
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
@@ -41,7 +44,7 @@ public final class App {
             var password = StringUtils.trim(ctx.formParam("password"));
             //var passwordConfirmation = ctx.formParam("passwordConfirmation");
 
-            var user = new User(firstName, lastName, email,Security.encrypt(password));
+            var user = new User(firstName, lastName, email, Security.encrypt(password));
             UserRepository.save(user);
             ctx.redirect("/users");
         });
