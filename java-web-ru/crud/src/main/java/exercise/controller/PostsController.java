@@ -19,21 +19,21 @@ public class PostsController {
     public static void index(Context ctx) {
         int per = 5;
         var posts = PostRepository.getEntities();
-        int pageCount = (int) Math.ceil(posts.size() / 5);
+        int pageCount = Math.ceilDiv(posts.size(), 5);
         List<Integer> pageList = new ArrayList<>(posts.size() / 5);
         for (int i = 0; i < pageCount; i++) {
             pageList.add(i);
         }
-        PostsPage page;
         String pageNumberStr = ctx.queryParam("page");
-
-
+        PostsPage page;
 
         if (pageNumberStr == null) {
             page = new PostsPage(posts.subList(0, 5), 0);
+        } else if (!pageList.contains(Integer.parseInt(pageNumberStr))) {
+            throw new NotFoundResponse("Page not found.");
         } else {
             int pageNumber = Integer.parseInt(pageNumberStr);
-            page = new PostsPage(posts.subList(per * pageNumber, pageNumber * per + per), pageNumber);
+            page = new PostsPage(posts.subList(per * pageNumber, Math.min(posts.size(), pageNumber * per + per)), pageNumber);
         }
         //var page = new PostsPage(posts);
         ctx.render("posts/index.jte", model("page", page, "nav", pageList));
@@ -43,7 +43,8 @@ public class PostsController {
         long id = ctx.pathParamAsClass("id", Long.class).get();
         //long idNumber = Long.parseLong(id);
         var post = PostRepository.find(id)
-                .orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
+                //.orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
+                .orElseThrow(() -> new NotFoundResponse("Page not found."));
         var page = new PostPage(post);
         ctx.render("posts/show.jte", model("page", page));
     }
