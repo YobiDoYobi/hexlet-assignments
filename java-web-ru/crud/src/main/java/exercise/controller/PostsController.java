@@ -19,24 +19,24 @@ public class PostsController {
     public static void index(Context ctx) {
         int per = 5;
         var posts = PostRepository.getEntities();
-        int pageCount = Math.ceilDiv(posts.size(), 5);
+        int pageCount = Math.ceilDiv(posts.size(), 5) + 1;
         List<Integer> pageList = new ArrayList<>(posts.size() / 5);
-        for (int i = 0; i < pageCount; i++) {
+        for (int i = 1; i < pageCount; i++) {
             pageList.add(i);
         }
         String pageNumberStr = ctx.queryParam("page");
         PostsPage page;
 
         if (pageNumberStr == null) {
-            page = new PostsPage(posts.subList(0, 5), 0);
+            page = new PostsPage(posts.subList(0, 5), 1, pageList);
         } else if (!pageList.contains(Integer.parseInt(pageNumberStr))) {
             throw new NotFoundResponse("Page not found.");
         } else {
-            int pageNumber = Integer.parseInt(pageNumberStr);
-            page = new PostsPage(posts.subList(per * pageNumber, Math.min(posts.size(), pageNumber * per + per)), pageNumber);
+            int pageNumber = Integer.parseInt(pageNumberStr) - 1;
+            page = new PostsPage(posts.subList(per * pageNumber, Math.min(posts.size(), pageNumber * per + per)), pageNumber + 1, pageList);
         }
         //var page = new PostsPage(posts);
-        ctx.render("posts/index.jte", model("page", page, "nav", pageList));
+        ctx.render("posts/index.jte", model("page", page));
     }
 
     public static void show(Context ctx) {

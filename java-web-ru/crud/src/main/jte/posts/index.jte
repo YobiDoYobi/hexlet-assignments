@@ -1,8 +1,6 @@
 @import exercise.util.NamedRoutes
 @import exercise.dto.posts.PostsPage
-@import java.util.List
 @param PostsPage page
-@param List<Integer> nav
 
 @template.layout.page(
 content = @`
@@ -22,7 +20,7 @@ content = @`
 
         <nav aria-label="...">
             <ul class="pagination">
-                @if(page.getCurrPage() <= nav.getFirst())
+                @if(page.getCurrPage() <= page.getListPage().get(0))
                     <li class="page-item disabled">
                         <a class="page-link">Previous</a>
                     </li>
@@ -32,7 +30,7 @@ content = @`
                            href="${NamedRoutes.postsPath()}?page=${page.getCurrPage() - 1}">Previous</a>
                     </li>
                 @endif
-                @for(var navPageNum : nav)
+                @for(var navPageNum : page.getListPage())
                     <div>
                         @if(page.getCurrPage() == navPageNum)
                             <li class="page-item active"><a class="page-link"
@@ -45,7 +43,7 @@ content = @`
                         @endif
                     </div>
                 @endfor
-                @if(page.getCurrPage() >= nav.getLast())
+                @if(page.getCurrPage() >= page.getListPage().get(page.getListPage().size()-1))
                     <li class="page-item disabled">
                         <a class="page-link">Next</a>
                     </li>

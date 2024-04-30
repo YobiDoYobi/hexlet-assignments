@@ -14,6 +14,7 @@ import lombok.Getter;
 public class PostsPage {
     private List<Post> posts;
     private int currPage;
+    List<Integer> listPage;
 }
 // END
 
