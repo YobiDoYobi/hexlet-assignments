@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import exercise.dto.posts.PostsPage;
 import exercise.dto.posts.PostPage;
-import exercise.model.Post;
 import exercise.repository.PostRepository;
 
 import io.javalin.http.Context;
@@ -33,7 +32,8 @@ public class PostsController {
             throw new NotFoundResponse("Page not found.");
         } else {
             int pageNumber = Integer.parseInt(pageNumberStr) - 1;
-            page = new PostsPage(posts.subList(per * pageNumber, Math.min(posts.size(), pageNumber * per + per)), pageNumber + 1, pageList);
+            page = new PostsPage(posts.subList(per * pageNumber, Math.min(posts.size(), pageNumber * per + per)),
+                    pageNumber + 1, pageList);
         }
         //var page = new PostsPage(posts);
         ctx.render("posts/index.jte", model("page", page));
